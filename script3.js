@@ -22,7 +22,7 @@
      CONFIG
      ------------------------------------------------------- */
   // Deployed backend (Render). Used when the site is hosted online.
-  const PROD_API = "https://mindmetric-r8xe.onrender.com";
+  const PROD_API = "https://mindmetric-1-xijl.onrender.com";
 
   // Local backend(s). Only tried when this page is opened from localhost / a
   // local file, e.g. `uvicorn main:app --reload` (port 8000) or `--port 2200`.
