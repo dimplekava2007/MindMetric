@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MindMetric — Understand and Measure Your Mental Well-being</title>
+<meta name="description" content="MindMetric is a machine-learning tool that estimates a student's mental well-being score from daily habits such as sleep, screen time, activity and stress. Not a clinical diagnosis." />
+<meta name="theme-color" content="#46705A" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2346705A'/%3E%3Cpath d='M14 42a18 18 0 0 1 36 0' fill='none' stroke='%23FBF8F1' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='42' r='4' fill='%23FBF8F1'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   MINDMETRIC — calm mental-wellness design system
+   ========================================================= */
+
+/* ---------- Tokens ---------- */
+:root {
+  --cream:      #FBF8F1;
+  --beige:      #F4EFE3;
+  --sand:       #EAE2D0;
+  --white:      #FFFFFF;
+
+  --sage-50:    #EEF3EC;
+  --sage-100:   #DDE8D9;
+  --sage-200:   #C3D5BE;
+  --sage-400:   #8FAE8B;
+  --sage-600:   #5C8368;
+  --sage-700:   #46705A;
+  --sage-800:   #355644;
+  --forest:     #243A2F;
+
+  --peach:      #F3E3D3;
+  --lilac:      #E8E6F2;
+
+  --ink:        #33433A;
+  --muted:      #5F6F64;
+  --line:       #E3DDCB;
+  --danger:     #B04A3A;
+  --danger-bg:  #FBEDE9;
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 28px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(36,58,47,.05), 0 4px 12px -4px rgba(36,58,47,.08);
+  --shadow-md: 0 2px 4px rgba(36,58,47,.04), 0 18px 40px -16px rgba(36,58,47,.18);
+  --shadow-lg: 0 4px 8px rgba(36,58,47,.05), 0 30px 60px -24px rgba(36,58,47,.28);
+
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --nav-h: 72px;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+img, svg { max-width: 100%; }
+h1, h2, h3, h4, p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--forest);
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(92,131,104,.55);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+.skip-link {
+  position: absolute; left: 16px; top: -60px; z-index: 200;
+  background: var(--forest); color: var(--cream);
+  padding: 10px 16px; border-radius: var(--r-sm); font-weight: 600;
+  transition: top .2s var(--ease);
+}
+.skip-link:focus { top: 12px; }
+
+/* ---------- Scroll reveal (only when JS is running) ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+  transition-delay: var(--d, 0s);
+}
+.js .reveal.in-view { opacity: 1; transform: none; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-weight: 600; font-size: 15px; line-height: 1;
+  padding: 14px 24px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .25s var(--ease), background .2s ease, color .2s ease, border-color .2s ease;
+  white-space: nowrap;
+}
+.btn svg { width: 18px; height: 18px; transition: transform .25s var(--ease); }
+.btn:hover svg { transform: translateX(3px); }
+.btn:active { transform: scale(.97); }
+
+.btn-primary { background: var(--sage-700); color: #fff; box-shadow: 0 8px 20px -8px rgba(70,112,90,.65); }
+.btn-primary:hover { background: var(--sage-800); transform: translateY(-2px); box-shadow: 0 14px 26px -10px rgba(53,86,68,.7); }
+.btn-primary:active { transform: translateY(0) scale(.97); }
+
+.btn-ghost { background: transparent; color: var(--sage-800); border-color: var(--sage-200); }
+.btn-ghost:hover { background: var(--sage-50); border-color: var(--sage-400); transform: translateY(-2px); }
+
+.btn-text { background: none; color: var(--muted); padding: 14px 10px; font-weight: 500; }
+.btn-text:hover { color: var(--forest); text-decoration: underline; text-underline-offset: 4px; }
+
+.btn-sm { padding: 11px 20px; font-size: 14px; }
+.btn-lg { padding: 17px 32px; font-size: 16px; }
+
+.btn:disabled { opacity: .75; cursor: progress; transform: none; }
+
+/* ---------- Header / nav ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--nav-h);
+  background: rgba(251,248,241,.82);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.site-header.scrolled { border-color: var(--line); box-shadow: 0 6px 24px -14px rgba(36,58,47,.22); background: rgba(251,248,241,.94); }
+
+.nav-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--sage-700); }
+.brand-mark { width: 38px; height: 38px; flex: none; transition: transform .4s var(--ease); }
+.brand:hover .brand-mark { transform: rotate(-8deg) scale(1.06); }
+.brand-name { font-family: var(--font-display); font-weight: 600; font-size: 22px; color: var(--forest); letter-spacing: -0.02em; }
+.brand-name span { color: var(--sage-600); font-weight: 500; }
+
+.primary-nav ul { display: flex; align-items: center; gap: 6px; }
+.nav-link {
+  position: relative; display: block; padding: 9px 16px;
+  font-size: 15px; font-weight: 500; color: var(--muted);
+  border-radius: var(--r-pill);
+  transition: color .2s ease, background .2s ease;
+}
+.nav-link:hover { color: var(--forest); background: var(--sage-50); }
+.nav-link.active { color: var(--sage-800); background: var(--sage-100); }
+.nav-cta { margin-left: 10px; }
+
+.nav-toggle {
+  display: none; width: 44px; height: 44px; padding: 0;
+  background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+  cursor: pointer; position: relative;
+}
+.nav-toggle span {
+  position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px;
+  background: var(--forest);
+  transition: transform .3s var(--ease), opacity .2s ease, top .3s var(--ease);
+}
+.nav-toggle span:nth-child(1) { top: 15px; }
+.nav-toggle span:nth-child(2) { top: 21px; }
+.nav-toggle span:nth-child(3) { top: 27px; }
+.nav-open .nav-toggle span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.nav-open .nav-toggle span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+/* ---------- Shared section bits ---------- */
+.section { padding: 110px 0; position: relative; scroll-margin-top: calc(var(--nav-h) - 1px); }
+.section-alt { background: var(--beige); }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sage-700);
+  background: var(--sage-100);
+  padding: 7px 14px; border-radius: var(--r-pill);
+  margin-bottom: 20px;
+}
+
+.section-head h2 { font-size: clamp(2rem, 4vw, 2.9rem); line-height: 1.15; }
+.section-head.center { text-align: center; max-width: 680px; margin: 0 auto 60px; }
+.section-sub { margin-top: 16px; color: var(--muted); font-size: 1.05rem; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; overflow: hidden; padding: 88px 0 120px; scroll-margin-top: var(--nav-h); }
+.hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .7; }
+.blob-1 { width: 520px; height: 520px; background: var(--sage-100); top: -160px; right: -120px; animation: drift 18s ease-in-out infinite alternate; }
+.blob-2 { width: 380px; height: 380px; background: var(--peach); bottom: -140px; left: -100px; animation: drift 22s ease-in-out infinite alternate-reverse; }
+.blob-3 { width: 280px; height: 280px; background: var(--lilac); top: 40%; left: 42%; opacity: .55; animation: drift 26s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translate(40px, 30px) scale(1.08); } }
+
+.hero-grid {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: center;
+}
+.hero-copy h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); line-height: 1.05; font-weight: 500; }
+.hero-copy h1 em { font-style: italic; color: var(--sage-600); font-weight: 400; }
+.lead { margin-top: 24px; font-size: 1.18rem; color: var(--muted); max-width: 540px; }
+.hero-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; }
+.hero-note { margin-top: 18px; font-size: 14px; color: var(--muted); }
+
+.hero-visual { position: relative; display: flex; justify-content: center; padding: 30px 10px; }
+.hero-card {
+  width: 100%; max-width: 380px;
+  background: rgba(255,255,255,.85);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 40px 36px 34px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: float 7s ease-in-out infinite;
+}
+.hero-gauge { width: 100%; overflow: visible; }
+.hero-gauge-fill { animation: heroFill 3.2s var(--ease) .6s forwards; }
+@keyframes heroFill { to { stroke-dashoffset: 28; } }
+.hero-card-title { margin-top: 6px; font-family: var(--font-display); font-size: 1.35rem; color: var(--forest); }
+.hero-card-sub { margin-top: 6px; font-size: 14.5px; color: var(--muted); }
+@keyframes float { 50% { transform: translateY(-10px); } }
+
+.chip {
+  position: absolute; display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--r-pill); box-shadow: var(--shadow-sm);
+  font-size: 13.5px; font-weight: 600; color: var(--forest);
+  animation: float 6s ease-in-out infinite;
+}
+.chip .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot-sage { background: var(--sage-400); } .dot-peach { background: #E3B08D; }
+.dot-lilac { background: #B2A9D6; }       .dot-sand { background: #D8C79B; }
+.chip-1 { top: 2%;    left: 0;     animation-delay: -1s; }
+.chip-2 { top: 18%;   right: -4px; animation-delay: -3s; }
+.chip-3 { bottom: 16%; left: -6px; animation-delay: -2s; }
+.chip-4 { bottom: 0;  right: 8%;   animation-delay: -4s; }
+
+/* ---------- About ---------- */
+.section-about { background: var(--white); }
+.about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 72px; align-items: start; }
+.about-body { display: grid; gap: 18px; font-size: 1.06rem; color: var(--muted); }
+.about-callout {
+  margin-top: 6px; padding: 20px 24px; background: var(--sage-50);
+  border-left: 4px solid var(--sage-400); border-radius: 0 var(--r-md) var(--r-md) 0;
+  font-size: 1rem; color: var(--ink);
+}
+
+/* ---------- How it works ---------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; position: relative; }
+.step {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: 32px 26px; box-shadow: var(--shadow-sm);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.step:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--sage-100); color: var(--sage-800);
+  font-family: var(--font-display); font-weight: 600; font-size: 20px; margin-bottom: 20px;
+}
+.step h3 { font-size: 1.25rem; margin-bottom: 10px; }
+.step p { font-size: 15px; color: var(--muted); }
+.steps .step:nth-child(2) .step-num { background: var(--peach); }
+.steps .step:nth-child(3) .step-num { background: var(--lilac); }
+.steps .step:nth-child(4) .step-num { background: var(--sand); }
+
+/* ---------- Features ---------- */
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature {
+  padding: 34px 30px; background: var(--white);
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s ease;
+}
+.feature:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--sage-200); }
+.feature-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 18px; margin-bottom: 22px;
+  transition: transform .4s var(--ease);
+}
+.feature:hover .feature-icon { transform: rotate(-6deg) scale(1.08); }
+.feature-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--sage-800); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.tone-sage { background: var(--sage-100); } .tone-peach { background: var(--peach); }
+.tone-lilac { background: var(--lilac); }  .tone-sand { background: var(--sand); }
+.feature h3 { font-size: 1.25rem; margin-bottom: 10px; }
+.feature p { font-size: 15px; color: var(--muted); }
+
+/* ---------- Predict section ---------- */
+.section-predict { background: linear-gradient(180deg, var(--sage-50) 0%, var(--cream) 100%); }
+.predict-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 28px; align-items: start; }
+
+.card {
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-md);
+}
+.form-card { padding: 12px 40px 36px; }
+.noscript-note { padding: 16px 0; color: var(--danger); font-weight: 600; }
+
+fieldset.group { border: 0; margin: 0; padding: 30px 0 28px; min-width: 0; border-bottom: 1px dashed var(--line); }
+fieldset.group:nth-of-type(3) { border-bottom: 0; padding-bottom: 8px; }
+legend {
+  display: flex; align-items: center; gap: 12px; padding: 0; margin-bottom: 22px;
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--forest);
+  float: left; width: 100%;
+}
+legend + * { clear: both; }
+.legend-index {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--sage-100); color: var(--sage-800);
+  font-family: var(--font-body); font-weight: 700; font-size: 14px;
+}
+
+.grid { display: grid; gap: 22px 20px; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.field-span { grid-column: 1 / -1; }
+
+label, .label { font-size: 14px; font-weight: 600; color: var(--forest); }
+
+input[type="text"], input[type="number"], select {
+  width: 100%; padding: 13px 15px;
+  font-size: 15px; color: var(--ink);
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-sm);
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  appearance: none; -webkit-appearance: none; -moz-appearance: textfield;
+}
+input::placeholder { color: #98A59C; }
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+select {
+  cursor: pointer; padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%235F6F64' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center;
+}
+select:invalid { color: #98A59C; }
+select option { color: var(--ink); }
+
+input:hover, select:hover { border-color: var(--sage-200); }
+input:focus, select:focus {
+  outline: none; background: var(--white);
+  border-color: var(--sage-600);
+  box-shadow: 0 0 0 4px rgba(143,174,139,.28);
+}
+
+.unit-input { position: relative; }
+.unit-input input { padding-right: 48px; }
+.unit { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 500; color: var(--muted); pointer-events: none; }
+
+.hint { font-size: 12.5px; color: var(--muted); }
+.error-msg { display: none; font-size: 13px; font-weight: 500; color: var(--danger); }
+.field-error .error-msg { display: block; animation: nudge .35s var(--ease); }
+.field-error .hint { display: none; }
+.field-error input, .field-error select { border-color: var(--danger); background: var(--danger-bg); }
+.field-error .seg-btn { border-color: #E6BDB5; }
+@keyframes nudge { from { opacity: 0; transform: translateY(-4px); } }
+
+.form-alert {
+  margin: 24px 0 -6px; padding: 14px 18px;
+  background: var(--danger-bg); color: var(--danger);
+  border: 1px solid #EFCBC3; border-radius: var(--r-sm);
+  font-size: 14.5px; font-weight: 500;
+}
+
+/* Segmented stress control */
+.segmented { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.seg-btn {
+  padding: 13px 8px; font-size: 14.5px; font-weight: 600; color: var(--muted);
+  background: var(--cream); border: 1.5px solid var(--line); border-radius: var(--r-sm);
+  cursor: pointer; transition: all .2s var(--ease);
+}
+.seg-btn:hover { border-color: var(--sage-400); color: var(--forest); transform: translateY(-1px); }
+.seg-btn[aria-checked="true"] { color: #fff; background: var(--sage-700); border-color: var(--sage-700); box-shadow: 0 8px 18px -8px rgba(70,112,90,.7); }
+.seg-btn[data-value="High"][aria-checked="true"] { background: #B7794F; border-color: #B7794F; box-shadow: 0 8px 18px -8px rgba(183,121,79,.7); }
+.seg-btn[data-value="Very High"][aria-checked="true"] { background: #A5523F; border-color: #A5523F; box-shadow: 0 8px 18px -8px rgba(165,82,63,.7); }
+
+.form-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 28px; margin-top: 8px; border-top: 1px dashed var(--line); }
+
+.btn-spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite; }
+.btn.loading .btn-spinner { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Result card ---------- */
+.result-card {
+  position: sticky; top: calc(var(--nav-h) + 20px);
+  padding: 36px 32px 34px; text-align: center; overflow: hidden;
+  background: linear-gradient(180deg, var(--white) 0%, var(--sage-50) 100%);
+}
+.result-card::before {
+  content: ""; position: absolute; width: 240px; height: 240px; border-radius: 50%;
+  background: var(--peach); filter: blur(60px); opacity: .55; top: -110px; right: -90px; pointer-events: none;
+}
+.result-card > * { position: relative; }
+
+.gauge-wrap { position: relative; max-width: 320px; margin: 0 auto 10px; }
+.gauge { width: 100%; display: block; overflow: visible; }
+.gauge-track { fill: none; stroke: var(--sage-100); stroke-width: 14; stroke-linecap: round; }
+.gauge-fill { fill: none; stroke: url(#gaugeGradient); stroke-width: 14; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; }
+.gauge-ticks line { stroke: rgba(36,58,47,.28); stroke-width: 1.4; stroke-linecap: round; }
+.gauge-marker { fill: #fff; stroke: var(--sage-700); stroke-width: 3.5; opacity: 0; filter: drop-shadow(0 2px 4px rgba(36,58,47,.3)); }
+.gauge-marker.show { opacity: 1; }
+.gauge-end { font-family: var(--font-body); font-size: 11px; font-weight: 600; fill: var(--muted); }
+
+.gauge-readout { position: absolute; left: 0; right: 0; bottom: 20%; display: flex; align-items: baseline; justify-content: center; gap: 5px; }
+.score-number { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.6rem, 6vw, 3.4rem); line-height: 1; color: var(--forest); letter-spacing: -0.02em; }
+.score-max { font-size: 14px; font-weight: 500; color: var(--muted); }
+
+.result-card.is-loading .gauge-track { animation: breathe 1.6s ease-in-out infinite; }
+.result-card.is-loading .score-number { opacity: .35; }
+@keyframes breathe { 50% { stroke: var(--sage-200); } }
+
+.state { animation: fadeUp .6s var(--ease); }
+.state[hidden] { display: none; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } }
+.state h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.state > p { font-size: 15px; color: var(--muted); max-width: 320px; margin: 0 auto; }
+
+.band-pill {
+  display: inline-block; padding: 8px 18px; border-radius: var(--r-pill);
+  font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  background: var(--sage-100); color: var(--sage-800);
+}
+.band-pill.band-low  { background: #F6E2D6; color: #8A4A2E; }
+.band-pill.band-mid  { background: #F4EBC9; color: #7A6320; }
+.band-pill.band-high { background: var(--sage-100); color: var(--sage-800); }
+
+.score-context { margin: 16px auto 0; font-size: 15.5px; color: var(--ink); max-width: 340px; }
+
+.scale { margin: 26px 0 4px; }
+.scale-bar { display: grid; grid-template-columns: 5fr 2fr 3fr; gap: 4px; height: 8px; }
+.scale-bar .seg { border-radius: 4px; opacity: .45; transition: opacity .4s ease, transform .4s var(--ease); }
+.seg-low { background: #D9A586; } .seg-mid { background: #E6CE8A; } .seg-high { background: #7FAF8D; }
+.scale-bar .seg.on { opacity: 1; transform: scaleY(1.5); }
+.scale-labels { display: grid; grid-template-columns: 5fr 2fr 3fr; gap: 4px; margin-top: 8px; font-size: 11.5px; line-height: 1.35; color: var(--muted); }
+
+.notes { margin: 24px 0 0; text-align: left; padding: 18px 20px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-md); }
+.notes h4 { font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--sage-700); margin-bottom: 10px; }
+.notes li { position: relative; padding-left: 20px; font-size: 14.5px; color: var(--ink); }
+.notes li + li { margin-top: 8px; }
+.notes li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--sage-400); }
+
+.state > .disclaimer-box { max-width: none; margin: 20px 0 0; padding: 14px 16px; background: var(--beige); border-radius: var(--r-md); font-size: 13px; line-height: 1.55; color: var(--muted); text-align: left; }
+.disclaimer-box strong { color: var(--forest); }
+
+.result-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.result-actions .btn { width: 100%; white-space: normal; text-align: center; line-height: 1.25; }
+.state-error h3 { color: var(--danger); }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--forest); color: #CFDACF; padding: 64px 0 36px; }
+.footer-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.footer-brand p { margin-top: 16px; max-width: 320px; font-size: 15px; color: #AEBFB2; }
+.brand-light { color: var(--sage-200); }
+.brand-light .brand-name { color: var(--cream); }
+.brand-light .brand-name span { color: var(--sage-200); }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 8px 28px; align-content: flex-start; }
+.footer-nav a { font-size: 15px; font-weight: 500; color: #CFDACF; transition: color .2s ease; }
+.footer-nav a:hover { color: #fff; text-decoration: underline; text-underline-offset: 5px; }
+.footer-disclaimer { margin-top: 44px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.12); }
+.footer-disclaimer p { font-size: 13.5px; line-height: 1.7; color: #9FB1A4; max-width: 860px; }
+.footer-disclaimer strong { color: #CFDACF; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 1020px) {
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-grid { gap: 40px; }
+}
+
+@media (max-width: 940px) {
+  .section { padding: 84px 0; }
+  .hero { padding: 56px 0 84px; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; padding: 10px; }
+  .hero-card { max-width: 320px; padding: 30px 28px 26px; }
+  .chip-1 { left: 4%; } .chip-3 { left: 2%; } .chip-2 { right: 2%; }
+  .about-grid { grid-template-columns: 1fr; gap: 28px; }
+  .predict-layout { grid-template-columns: 1fr; }
+  .result-card { position: relative; top: 0; scroll-margin-top: calc(var(--nav-h) + 12px); }
+
+  .nav-toggle { display: block; }
+  .primary-nav {
+    position: absolute; top: var(--nav-h); left: 0; right: 0;
+    background: rgba(251,248,241,.98); border-bottom: 1px solid var(--line);
+    box-shadow: 0 24px 40px -24px rgba(36,58,47,.3);
+    padding: 12px 20px 22px;
+    transform: translateY(-12px); opacity: 0; visibility: hidden;
+    transition: transform .35s var(--ease), opacity .25s ease, visibility .25s;
+  }
+  .nav-open .primary-nav { transform: none; opacity: 1; visibility: visible; }
+  .primary-nav ul { flex-direction: column; align-items: stretch; gap: 4px; }
+  .nav-link { padding: 14px 16px; font-size: 16px; border-radius: var(--r-sm); }
+  .nav-cta { margin: 10px 0 0; padding: 15px 20px; }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .section { padding: 68px 0; }
+  .section-head.center { margin-bottom: 40px; }
+  .steps, .feature-grid { grid-template-columns: 1fr; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .form-card { padding: 4px 22px 26px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .segmented { grid-template-columns: repeat(2, 1fr); }
+  .form-footer { flex-direction: column-reverse; align-items: stretch; }
+  .form-footer .btn { width: 100%; }
+  .result-card { padding: 28px 20px 26px; }
+  .footer-grid { flex-direction: column; }
+  .chip { font-size: 12.5px; padding: 7px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  .hero-gauge-fill { stroke-dashoffset: 28; }
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#predict">Skip to the assessment</a>
+
+<!-- =====================  NAVIGATION  ===================== -->
+<header class="site-header" id="site-header">
+  <div class="container nav-inner">
+    <a class="brand" href="#home" aria-label="MindMetric home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="18" fill="currentColor"/>
+        <path d="M14 42a18 18 0 0 1 36 0" fill="none" stroke="#FBF8F1" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="32" cy="42" r="4.5" fill="#FBF8F1"/>
+      </svg>
+      <span class="brand-name">Mind<span>Metric</span></span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
+        <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+        <li><a href="#how-it-works" class="nav-link" data-section="how-it-works">How It Works</a></li>
+        <li><a href="#features" class="nav-link" data-section="features">Features</a></li>
+        <li><a href="#predict" class="btn btn-primary btn-sm nav-cta" data-focus-form>Check Your Score</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- =====================  HERO  ===================== -->
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Student well-being, gently measured</span>
+        <h1>Understand your mind,<br /><em>one habit at a time.</em></h1>
+        <p class="lead">MindMetric uses machine learning to estimate a mental well-being score from the everyday patterns that shape it: sleep, screen time, movement, study load and stress.</p>
+        <div class="hero-actions">
+          <a href="#predict" class="btn btn-primary btn-lg" id="try-btn" data-focus-form>Check Your Score
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#about" class="btn btn-ghost btn-lg" id="read-btn">Read More</a>
+        </div>
+        <p class="hero-note">Takes about two minutes. No sign-up needed.</p>
+      </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="hero-card">
+          <svg viewBox="0 0 240 140" class="hero-gauge">
+            <defs>
+              <linearGradient id="heroGradient" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="220" y2="0">
+                <stop offset="0%" stop-color="#D9A586"/>
+                <stop offset="50%" stop-color="#E6CE8A"/>
+                <stop offset="100%" stop-color="#7FAF8D"/>
+              </linearGradient>
+            </defs>
+            <path d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="#E7EDE3" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 20 120 A 100 100 0 0 1 220 120" pathLength="100" fill="none" stroke="url(#heroGradient)" stroke-width="14" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100" class="hero-gauge-fill"/>
+          </svg>
+          <p class="hero-card-title">Your well-being signal</p>
+          <p class="hero-card-sub">A calm, visual read on how your routine adds up.</p>
+        </div>
+        <span class="chip chip-1"><i class="dot dot-sage"></i>Sleep</span>
+        <span class="chip chip-2"><i class="dot dot-peach"></i>Screen time</span>
+        <span class="chip chip-3"><i class="dot dot-lilac"></i>Activity</span>
+        <span class="chip chip-4"><i class="dot dot-sand"></i>Stress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================  ABOUT  ===================== -->
+  <section class="section section-about" id="about">
+    <div class="container about-grid">
+      <div class="section-head reveal">
+        <span class="eyebrow">About MindMetric</span>
+        <h2>A softer way to look at<br />how daily life affects well-being</h2>
+      </div>
+      <div class="about-body reveal">
+        <p>Students juggle study, social media, sleep and stress every single day, and it is hard to see how those pieces fit together. MindMetric turns twelve simple answers about your routine into a single, easy-to-read well-being score.</p>
+        <p>The score comes from a scikit-learn regression model trained on a dataset of student social-media and mental-health survey responses. It is served through a FastAPI backend, so every score you see is computed live by the model.</p>
+        <p class="about-callout"><strong>Please note:</strong> MindMetric is an educational, ML-generated estimate. It is <strong>not</strong> a clinical diagnosis and cannot replace advice from a qualified professional.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================  HOW IT WORKS  ===================== -->
+  <section class="section section-alt" id="how-it-works">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>From a few answers to a clear score</h2>
+        <p class="section-sub">Four simple steps, and the whole thing takes about two minutes.</p>
+      </div>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-num">1</span>
+          <h3>Share your routine</h3>
+          <p>Tell us about your age, studies, social-media habits, sleep, activity and how stressed you feel.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">2</span>
+          <h3>Answers are checked</h3>
+          <p>Each field is validated in your browser first, so values stay within sensible ranges before anything is sent.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">3</span>
+          <h3>The model predicts</h3>
+          <p>Your answers go to the FastAPI backend, where the trained model estimates a well-being score from 0 to 10.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">4</span>
+          <h3>See your result</h3>
+          <p>You get a gauge, a plain-language interpretation and a few gentle things to reflect on.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- =====================  FEATURES  ===================== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Features</span>
+        <h2>Built to feel calm and clear</h2>
+        <p class="section-sub">Everything is designed to be easy to use and easy to understand.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature reveal">
+          <span class="feature-icon tone-sage" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg></span>
+          <h3>Live ML prediction</h3>
+          <p>A trained scikit-learn model scores your answers in real time through the FastAPI backend.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature-icon tone-peach" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 0 1 16 0"/><path d="M12 18l4-5"/></svg></span>
+          <h3>Visual score gauge</h3>
+          <p>An animated gauge shows where your score sits on the 0 to 10 scale at a glance.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature-icon tone-lilac" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></span>
+          <h3>Friendly validation</h3>
+          <p>Clear, helpful messages guide you if a value is missing or out of range.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature-icon tone-sand" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg></span>
+          <h3>Supportive guidance</h3>
+          <p>Results come with a kind, plain-language explanation and ideas worth reflecting on.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature-icon tone-sage" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+          <h3>Works on every screen</h3>
+          <p>A responsive layout keeps the experience comfortable on phones, tablets and laptops.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="feature-icon tone-peach" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3>No account needed</h3>
+          <p>There is no sign-up. Your answers are used only to generate your estimate.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================  PREDICTION  ===================== -->
+  <section class="section section-predict" id="predict">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Your assessment</span>
+        <h2>Check your well-being score</h2>
+        <p class="section-sub">Answer honestly, there are no right or wrong responses. All fields are required.</p>
+      </div>
+
+      <div class="predict-layout">
+
+        <!-- FORM -->
+        <div class="card form-card reveal">
+          <noscript><p class="noscript-note">JavaScript is required to run the assessment.</p></noscript>
+          <form id="predict-form" novalidate>
+            <div class="form-alert" id="form-alert" role="alert" hidden></div>
+
+            <fieldset class="group">
+              <legend><span class="legend-index">1</span>About you</legend>
+              <div class="grid grid-3">
+                <div class="field">
+                  <label for="age">Age</label>
+                  <input type="number" id="age" name="age" min="10" max="100" step="1" inputmode="numeric" required placeholder="e.g. 21" aria-describedby="age-err" />
+                  <span class="hint">Between 10 and 100</span>
+                  <span class="error-msg" id="age-err"></span>
+                </div>
+                <div class="field">
+                  <label for="gender">Gender</label>
+                  <select id="gender" name="gender" required aria-describedby="gender-err">
+                    <option value="" disabled selected hidden>Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                  <span class="error-msg" id="gender-err"></span>
+                </div>
+                <div class="field">
+                  <label for="country">Country</label>
+                  <input type="text" id="country" name="country" list="country-list" required placeholder="e.g. India" autocomplete="off" aria-describedby="country-err" />
+                  <datalist id="country-list">
+                    <option value="India"></option><option value="USA"></option><option value="UK"></option>
+                    <option value="Canada"></option><option value="Australia"></option><option value="Germany"></option>
+                    <option value="France"></option><option value="Spain"></option><option value="Mexico"></option>
+                    <option value="Turkey"></option><option value="Afghanistan"></option><option value="Albania"></option>
+                    <option value="Andorra"></option><option value="Argentina"></option><option value="Armenia"></option>
+                    <option value="Austria"></option><option value="Azerbaijan"></option><option value="Bahamas"></option>
+                    <option value="Bahrain"></option><option value="Bangladesh"></option><option value="Belarus"></option>
+                    <option value="Belgium"></option><option value="Bhutan"></option><option value="Bolivia"></option>
+                    <option value="Bosnia"></option><option value="Brazil"></option><option value="Bulgaria"></option>
+                    <option value="Chile"></option><option value="China"></option><option value="Colombia"></option>
+                    <option value="Costa Rica"></option><option value="Croatia"></option><option value="Cyprus"></option>
+                    <option value="Czech Republic"></option><option value="Denmark"></option><option value="Ecuador"></option>
+                    <option value="Egypt"></option><option value="Estonia"></option><option value="Finland"></option>
+                    <option value="Georgia"></option><option value="Ghana"></option><option value="Greece"></option>
+                    <option value="Hong Kong"></option><option value="Hungary"></option><option value="Iceland"></option>
+                    <option value="Indonesia"></option><option value="Iraq"></option><option value="Ireland"></option>
+                    <option value="Israel"></option><option value="Italy"></option><option value="Jamaica"></option>
+                    <option value="Japan"></option><option value="Jordan"></option><option value="Kazakhstan"></option>
+                    <option value="Kenya"></option><option value="Kosovo"></option><option value="Kuwait"></option>
+                    <option value="Kyrgyzstan"></option><option value="Latvia"></option><option value="Lebanon"></option>
+                    <option value="Liechtenstein"></option><option value="Lithuania"></option><option value="Luxembourg"></option>
+                    <option value="Malaysia"></option><option value="Maldives"></option><option value="Malta"></option>
+                    <option value="Moldova"></option><option value="Monaco"></option><option value="Montenegro"></option>
+                    <option value="Morocco"></option><option value="Nepal"></option><option value="Netherlands"></option>
+                    <option value="New Zealand"></option><option value="Nigeria"></option><option value="North Macedonia"></option>
+                    <option value="Norway"></option><option value="Oman"></option><option value="Pakistan"></option>
+                    <option value="Panama"></option><option value="Paraguay"></option><option value="Peru"></option>
+                    <option value="Philippines"></option><option value="Poland"></option><option value="Portugal"></option>
+                    <option value="Qatar"></option><option value="Romania"></option><option value="Russia"></option>
+                    <option value="San Marino"></option><option value="Serbia"></option><option value="Singapore"></option>
+                    <option value="Slovakia"></option><option value="Slovenia"></option><option value="South Africa"></option>
+                    <option value="South Korea"></option><option value="Sri Lanka"></option><option value="Sweden"></option>
+                    <option value="Switzerland"></option><option value="Syria"></option><option value="Taiwan"></option>
+                    <option value="Tajikistan"></option><option value="Thailand"></option><option value="Trinidad"></option>
+                    <option value="UAE"></option><option value="Ukraine"></option><option value="Uruguay"></option>
+                    <option value="Uzbekistan"></option><option value="Vatican City"></option><option value="Venezuela"></option>
+                    <option value="Vietnam"></option><option value="Yemen"></option><option value="Other"></option>
+                  </datalist>
+                  <span class="hint">Not listed? Type it anyway.</span>
+                  <span class="error-msg" id="country-err"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="group">
+              <legend><span class="legend-index">2</span>Study &amp; digital habits</legend>
+              <div class="grid grid-2">
+                <div class="field">
+                  <label for="academic_level">Academic level</label>
+                  <select id="academic_level" name="academic_level" required aria-describedby="academic_level-err">
+                    <option value="" disabled selected hidden>Select</option>
+                    <option value="High School">High School</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Graduate">Graduate</option>
+                  </select>
+                  <span class="error-msg" id="academic_level-err"></span>
+                </div>
+                <div class="field">
+                  <label for="most_used_platform">Most used platform</label>
+                  <select id="most_used_platform" name="most_used_platform" required aria-describedby="most_used_platform-err">
+                    <option value="" disabled selected hidden>Select</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Snapchat">Snapchat</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="YouTube">YouTube</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="LINE">LINE</option>
+                    <option value="KakaoTalk">KakaoTalk</option>
+                    <option value="VKontakte">VKontakte</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="WeChat">WeChat</option>
+                  </select>
+                  <span class="error-msg" id="most_used_platform-err"></span>
+                </div>
+                <div class="field">
+                  <label for="purpose_of_use">Purpose of use</label>
+                  <select id="purpose_of_use" name="purpose_of_use" required aria-describedby="purpose_of_use-err">
+                    <option value="" disabled selected hidden>Select</option>
+                    <option value="Networking">Networking</option>
+                    <option value="Education">Education</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="News">News</option>
+                  </select>
+                  <span class="error-msg" id="purpose_of_use-err"></span>
+                </div>
+                <div class="field">
+                  <label for="avg_daily_usage_hours">Average daily usage</label>
+                  <div class="unit-input">
+                    <input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="0.1" inputmode="decimal" required placeholder="e.g. 4.5" aria-describedby="avg_daily_usage_hours-err" />
+                    <span class="unit">hrs</span>
+                  </div>
+                  <span class="hint">Between 0 and 24 hours</span>
+                  <span class="error-msg" id="avg_daily_usage_hours-err"></span>
+                </div>
+                <div class="field">
+                  <label for="daily_unlocks">Daily phone unlocks</label>
+                  <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" inputmode="numeric" required placeholder="e.g. 60" aria-describedby="daily_unlocks-err" />
+                  <span class="hint">Roughly how often you pick up your phone</span>
+                  <span class="error-msg" id="daily_unlocks-err"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="group">
+              <legend><span class="legend-index">3</span>Lifestyle &amp; stress</legend>
+              <div class="grid grid-3">
+                <div class="field">
+                  <label for="study_hours">Study hours</label>
+                  <div class="unit-input">
+                    <input type="number" id="study_hours" name="study_hours" min="0" max="24" step="0.1" inputmode="decimal" required placeholder="e.g. 3" aria-describedby="study_hours-err" />
+                    <span class="unit">hrs</span>
+                  </div>
+                  <span class="hint">Per day</span>
+                  <span class="error-msg" id="study_hours-err"></span>
+                </div>
+                <div class="field">
+                  <label for="physical_activity_hours">Physical activity</label>
+                  <div class="unit-input">
+                    <input type="number" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="0.1" inputmode="decimal" required placeholder="e.g. 1" aria-describedby="physical_activity_hours-err" />
+                    <span class="unit">hrs</span>
+                  </div>
+                  <span class="hint">Per day</span>
+                  <span class="error-msg" id="physical_activity_hours-err"></span>
+                </div>
+                <div class="field">
+                  <label for="sleep_hours_per_night">Sleep per night</label>
+                  <div class="unit-input">
+                    <input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="0.1" inputmode="decimal" required placeholder="e.g. 7" aria-describedby="sleep_hours_per_night-err" />
+                    <span class="unit">hrs</span>
+                  </div>
+                  <span class="hint">Average hours</span>
+                  <span class="error-msg" id="sleep_hours_per_night-err"></span>
+                </div>
+                <div class="field field-span">
+                  <span class="label" id="stress-label">Stress level</span>
+                  <div class="segmented" id="stress_level_group" role="radiogroup" aria-labelledby="stress-label" aria-describedby="stress_level-err">
+                    <button type="button" class="seg-btn" role="radio" aria-checked="false" tabindex="0" data-value="Low">Low</button>
+                    <button type="button" class="seg-btn" role="radio" aria-checked="false" tabindex="-1" data-value="Medium">Medium</button>
+                    <button type="button" class="seg-btn" role="radio" aria-checked="false" tabindex="-1" data-value="High">High</button>
+                    <button type="button" class="seg-btn" role="radio" aria-checked="false" tabindex="-1" data-value="Very High">Very High</button>
+                  </div>
+                  <input type="hidden" id="stress_level" name="stress_level" />
+                  <span class="error-msg" id="stress_level-err"></span>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="form-footer">
+              <button type="button" class="btn btn-text" id="clear-btn">Clear form</button>
+              <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
+                <span class="btn-label">Get my score</span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- RESULT -->
+        <aside class="card result-card reveal" id="result-card" aria-live="polite" aria-label="Your result">
+          <div class="gauge-wrap">
+            <svg class="gauge" viewBox="0 0 240 142" aria-hidden="true">
+              <defs>
+                <linearGradient id="gaugeGradient" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="220" y2="0">
+                  <stop offset="0%" stop-color="#D9A586"/>
+                  <stop offset="50%" stop-color="#E6CE8A"/>
+                  <stop offset="100%" stop-color="#7FAF8D"/>
+                </linearGradient>
+              </defs>
+              <path class="gauge-track" d="M 20 120 A 100 100 0 0 1 220 120" />
+              <path class="gauge-fill" id="gauge-fill" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="100" />
+              <g class="gauge-ticks" id="gauge-ticks"></g>
+              <circle class="gauge-marker" id="gauge-marker" r="9" cx="20" cy="120" />
+              <text class="gauge-end" x="20" y="138" text-anchor="middle">0</text>
+              <text class="gauge-end" x="220" y="138" text-anchor="middle">10</text>
+            </svg>
+            <div class="gauge-readout">
+              <span class="score-number" id="score-number">–</span>
+              <span class="score-max" id="score-max">/ 10</span>
+            </div>
+          </div>
+
+          <div class="state state-idle" id="state-idle">
+            <h3>Your score will appear here</h3>
+            <p>Complete the form and press <strong>Get my score</strong> to see your estimated well-being score on a 0 to 10 scale.</p>
+          </div>
+
+          <div class="state state-loading" id="state-loading" hidden>
+            <h3>Analyzing your responses…</h3>
+            <p id="loading-copy">Running your answers through the model.</p>
+          </div>
+
+          <div class="state state-result" id="state-result" hidden>
+            <span class="band-pill" id="score-band">–</span>
+            <p class="score-context" id="score-context"></p>
+
+            <div class="scale" aria-hidden="true">
+              <div class="scale-bar"><span class="seg seg-low"></span><span class="seg seg-mid"></span><span class="seg seg-high"></span></div>
+              <div class="scale-labels"><span>0 – 5<br />Lower</span><span>5 – 7<br />Moderate</span><span>7 – 10<br />Higher</span></div>
+            </div>
+
+            <div class="notes" id="score-notes-wrap" hidden>
+              <h4>Things you could explore</h4>
+              <ul id="score-notes"></ul>
+            </div>
+
+            <p class="disclaimer-box"><strong>Not a diagnosis.</strong> This is an ML-generated estimate based on patterns in survey data. It is not a clinical assessment. If you are struggling, please talk to someone you trust or a qualified professional.</p>
+
+            <div class="result-actions">
+              <button type="button" class="btn btn-primary" id="reset-btn">Take the assessment again</button>
+              <button type="button" class="btn btn-ghost" id="edit-btn">Edit my answers</button>
+            </div>
+          </div>
+
+          <div class="state state-error" id="state-error" hidden>
+            <h3 id="error-label">Something went wrong</h3>
+            <p id="error-copy"></p>
+            <div class="result-actions">
+              <button type="button" class="btn btn-primary" id="error-retry-btn">Try again</button>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =====================  FOOTER  ===================== -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand-light" href="#home" aria-label="MindMetric home">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <rect width="64" height="64" rx="18" fill="currentColor"/>
+          <path d="M14 42a18 18 0 0 1 36 0" fill="none" stroke="#243A2F" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="32" cy="42" r="4.5" fill="#243A2F"/>
+        </svg>
+        <span class="brand-name">Mind<span>Metric</span></span>
+      </a>
+      <p>Understanding and measuring mental well-being, one habit at a time.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#features">Features</a>
+      <a href="#predict" data-focus-form>Check Your Score</a>
+    </nav>
+  </div>
+  <div class="container footer-disclaimer">
+    <p><strong>Disclaimer:</strong> MindMetric is an educational project. Scores are ML-generated estimates and are not a clinical diagnosis, medical advice or a substitute for professional care. If you are struggling, please reach out to a trusted person, a qualified mental-health professional, or your local emergency services.</p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   MindMetric — frontend logic
+   Talks to the FastAPI backend:  POST /predict
+   Request fields (StudentData) : age, gender, country, academic_level,
+     most_used_platform, purpose_of_use, avg_daily_usage_hours,
+     daily_unlocks, study_hours, physical_activity_hours,
+     sleep_hours_per_night, stress_level
+   Response                     : { predicted_mental_health_score: number }
+
+   Test status: verified in headless Chrome against a test stand-in of
+   main.py (same schema + your real .pkl model). Not yet exercised against
+   your real FastAPI process or the live Render URL, so run one prediction
+   on the deployed site after replacing the files.
+   ========================================================= */
+(() => {
+  "use strict";
+
+  // Lets CSS reveal-animations apply only when JavaScript is running.
+  document.documentElement.classList.add("js");
+
+  /* -------------------------------------------------------
+     CONFIG
+     ------------------------------------------------------- */
+  // Deployed backend (Render). Used when the site is hosted online.
+  const PROD_API = "https://mindmetric-r8xe.onrender.com";
+
+  // Local backend(s). Only tried when this page is opened from localhost / a
+  // local file, e.g. `uvicorn main:app --reload` (port 8000) or `--port 2200`.
+  // If none of them is running, the deployed backend above is used instead.
+  const LOCAL_APIS = ["http://127.0.0.1:8000", "http://127.0.0.1:2200"];
+
+  const IS_LOCAL_PAGE = ["localhost", "127.0.0.1", "[::1]", ""].includes(window.location.hostname);
+  const API_CANDIDATES = IS_LOCAL_PAGE ? [...LOCAL_APIS, PROD_API] : [PROD_API];
+
+  const LOCAL_TIMEOUT_MS = 6000;
+  const REMOTE_TIMEOUT_MS = 60000; // free hosting can take ~1 minute to wake up
+  const SLOW_NOTICE_MS = 5000;
+
+  const SCORE_MAX = 10;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* -------------------------------------------------------
+     ELEMENTS
+     ------------------------------------------------------- */
+  const $ = (id) => document.getElementById(id);
+
+  const header = $("site-header");
+  const navToggle = $("nav-toggle");
+  const primaryNav = $("primary-nav");
+
+  const form = $("predict-form");
+  const formAlert = $("form-alert");
+  const submitBtn = $("submit-btn");
+  const clearBtn = $("clear-btn");
+  const resetBtn = $("reset-btn");
+  const editBtn = $("edit-btn");
+  const errorRetryBtn = $("error-retry-btn");
+
+  const resultCard = $("result-card");
+  const states = {
+    idle: $("state-idle"),
+    loading: $("state-loading"),
+    result: $("state-result"),
+    error: $("state-error"),
+  };
+  const loadingCopy = $("loading-copy");
+
+  const gaugeFill = $("gauge-fill");
+  const gaugeMarker = $("gauge-marker");
+  const gaugeTicks = $("gauge-ticks");
+  const scoreNumber = $("score-number");
+  const scoreMax = $("score-max");
+  const scoreBand = $("score-band");
+  const scoreContext = $("score-context");
+  const scoreNotes = $("score-notes");
+  const scoreNotesWrap = $("score-notes-wrap");
+  const scaleSegs = document.querySelectorAll(".scale-bar .seg");
+
+  const errorLabel = $("error-label");
+  const errorCopy = $("error-copy");
+
+  const stressGroup = $("stress_level_group");
+  const stressInput = $("stress_level");
+  const stressButtons = Array.from(stressGroup.querySelectorAll(".seg-btn"));
+
+  /* -------------------------------------------------------
+     NAVIGATION
+     ------------------------------------------------------- */
+  function setNavOpen(open) {
+    header.classList.toggle("nav-open", open);
+    navToggle.setAttribute("aria-expanded", String(open));
+    navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+
+  navToggle.addEventListener("click", () => setNavOpen(!header.classList.contains("nav-open")));
+
+  // Close the mobile menu after choosing a link, pressing Escape, or resizing up.
+  primaryNav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setNavOpen(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && header.classList.contains("nav-open")) {
+      setNavOpen(false);
+      navToggle.focus();
+    }
+  });
+  window.matchMedia("(min-width: 941px)").addEventListener("change", (m) => m.matches && setNavOpen(false));
+
+  // Header shadow once the page is scrolled.
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Highlight the nav link of the section currently in view.
+  const navLinks = Array.from(document.querySelectorAll(".nav-link[data-section]"));
+  function updateActiveLink() {
+    const probe = window.scrollY + header.offsetHeight + window.innerHeight * 0.3;
+    let current = "home";
+    navLinks.forEach((link) => {
+      const section = document.getElementById(link.dataset.section);
+      if (section && section.offsetTop <= probe) current = link.dataset.section;
+    });
+    // The assessment section has no text link of its own (it has the CTA button).
+    const predict = $("predict");
+    if (predict && predict.offsetTop <= probe) current = "";
+    navLinks.forEach((link) => {
+      const on = link.dataset.section === current;
+      link.classList.toggle("active", on);
+      if (on) link.setAttribute("aria-current", "true");
+      else link.removeAttribute("aria-current");
+    });
+  }
+  window.addEventListener("scroll", updateActiveLink, { passive: true });
+  window.addEventListener("resize", updateActiveLink);
+  updateActiveLink();
+
+  // "Check Your Score" / "Try" links: scroll to the form, then focus the first field.
+  document.querySelectorAll("[data-focus-form]").forEach((el) => {
+    el.addEventListener("click", () => {
+      window.setTimeout(() => $("age").focus({ preventScroll: true }), prefersReducedMotion ? 50 : 700);
+    });
+  });
+
+  // Reveal-on-scroll animation.
+  const revealEls = document.querySelectorAll(".reveal");
+  revealEls.forEach((el, i) => el.style.setProperty("--d", `${(i % 3) * 0.08}s`));
+  if ("IntersectionObserver" in window && !prefersReducedMotion) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add("in-view"));
+  }
+
+  /* -------------------------------------------------------
+     GAUGE
+     ------------------------------------------------------- */
+  const GAUGE = { cx: 120, cy: 120, r: 100 };
+
+  function drawTicks() {
+    const ns = "http://www.w3.org/2000/svg";
+    gaugeTicks.innerHTML = "";
+    for (let i = 0; i <= SCORE_MAX; i++) {
+      const angle = Math.PI - (i / SCORE_MAX) * Math.PI;
+      const major = i % 5 === 0;
+      const r1 = 80;
+      const r2 = major ? 68 : 74;
+      const line = document.createElementNS(ns, "line");
+      line.setAttribute("x1", (GAUGE.cx + r1 * Math.cos(angle)).toFixed(2));
+      line.setAttribute("y1", (GAUGE.cy - r1 * Math.sin(angle)).toFixed(2));
+      line.setAttribute("x2", (GAUGE.cx + r2 * Math.cos(angle)).toFixed(2));
+      line.setAttribute("y2", (GAUGE.cy - r2 * Math.sin(angle)).toFixed(2));
+      gaugeTicks.appendChild(line);
+    }
+  }
+
+  // Positions the arc fill and the marker for a value between 0 and SCORE_MAX.
+  function setGauge(value) {
+    const v = Math.max(0, Math.min(SCORE_MAX, value));
+    gaugeFill.style.strokeDashoffset = String(100 - (v / SCORE_MAX) * 100);
+    const angle = Math.PI - (v / SCORE_MAX) * Math.PI;
+    gaugeMarker.setAttribute("cx", (GAUGE.cx + GAUGE.r * Math.cos(angle)).toFixed(2));
+    gaugeMarker.setAttribute("cy", (GAUGE.cy - GAUGE.r * Math.sin(angle)).toFixed(2));
+  }
+
+  let rafId = 0;
+  function animateGauge(target, onDone) {
+    cancelAnimationFrame(rafId);
+    gaugeMarker.classList.add("show");
+    const duration = prefersReducedMotion ? 0 : 1400;
+    const start = performance.now();
+
+    const finish = () => {
+      setGauge(target);
+      scoreNumber.textContent = target.toFixed(2);
+      if (onDone) onDone();
+    };
+    if (!duration) return finish();
+
+    const frame = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const current = target * eased;
+      setGauge(current);
+      scoreNumber.textContent = current.toFixed(2);
+      if (t < 1) rafId = requestAnimationFrame(frame);
+      else finish();
+    };
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function resetGauge() {
+    cancelAnimationFrame(rafId);
+    gaugeFill.style.strokeDashoffset = "100";
+    gaugeMarker.classList.remove("show");
+    gaugeMarker.setAttribute("cx", String(GAUGE.cx - GAUGE.r));
+    gaugeMarker.setAttribute("cy", String(GAUGE.cy));
+    scoreNumber.textContent = "–";
+    scoreMax.hidden = false;
+  }
+
+  drawTicks();
+  resetGauge();
+
+  /* -------------------------------------------------------
+     STRESS SEGMENTED CONTROL (accessible radio group)
+     ------------------------------------------------------- */
+  function selectStress(btn, { focus = false } = {}) {
+    stressButtons.forEach((b) => {
+      const on = b === btn;
+      b.setAttribute("aria-checked", String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    stressInput.value = btn ? btn.dataset.value : "";
+    if (btn && focus) btn.focus();
+    if (btn) clearFieldError(stressInput);
+  }
+
+  function clearStress() {
+    stressButtons.forEach((b, i) => {
+      b.setAttribute("aria-checked", "false");
+      b.tabIndex = i === 0 ? 0 : -1;
+    });
+    stressInput.value = "";
+  }
+
+  stressButtons.forEach((btn, i) => {
+    btn.addEventListener("click", () => selectStress(btn));
+    btn.addEventListener("keydown", (e) => {
+      let next = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = stressButtons[(i + 1) % stressButtons.length];
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = stressButtons[(i - 1 + stressButtons.length) % stressButtons.length];
+      if (next) {
+        e.preventDefault();
+        selectStress(next, { focus: true });
+      }
+    });
+  });
+
+  /* -------------------------------------------------------
+     FIELD ERRORS
+     ------------------------------------------------------- */
+  const wrapOf = (input) => input.closest(".field");
+
+  function setFieldError(input, message) {
+    const wrap = wrapOf(input);
+    if (!wrap) return;
+    wrap.classList.add("field-error");
+    const msg = wrap.querySelector(".error-msg");
+    if (msg) msg.textContent = message;
+    input.setAttribute("aria-invalid", "true");
+  }
+
+  function clearFieldError(input) {
+    const wrap = wrapOf(input);
+    if (!wrap) return;
+    wrap.classList.remove("field-error");
+    const msg = wrap.querySelector(".error-msg");
+    if (msg) msg.textContent = "";
+    input.removeAttribute("aria-invalid");
+  }
+
+  function clearAllErrors() {
+    form.querySelectorAll(".field").forEach((f) => f.classList.remove("field-error"));
+    form.querySelectorAll(".error-msg").forEach((m) => (m.textContent = ""));
+    form.querySelectorAll("[aria-invalid]").forEach((el) => el.removeAttribute("aria-invalid"));
+    hideFormAlert();
+  }
+
+  function showFormAlert(message) {
+    formAlert.textContent = message;
+    formAlert.hidden = false;
+  }
+  function hideFormAlert() {
+    formAlert.hidden = true;
+    formAlert.textContent = "";
+  }
+
+  /* -------------------------------------------------------
+     VALIDATION (mirrors the StudentData model in main.py)
+     ------------------------------------------------------- */
+  const NUMERIC_FIELDS = [
+    { id: "age",                     label: "your age",                  min: 10, max: 100,      integer: true },
+    { id: "avg_daily_usage_hours",   label: "your average daily usage",  min: 0,  max: 24 },
+    { id: "daily_unlocks",           label: "your daily phone unlocks",  min: 0,  max: Infinity, integer: true },
+    { id: "study_hours",             label: "your study hours",          min: 0,  max: 24 },
+    { id: "physical_activity_hours", label: "your physical activity",    min: 0,  max: 24 },
+    { id: "sleep_hours_per_night",   label: "your sleep hours",          min: 0,  max: 24 },
+  ];
+
+  const CHOICE_FIELDS = [
+    { id: "gender",             label: "your gender" },
+    { id: "country",            label: "your country" },
+    { id: "academic_level",     label: "your academic level" },
+    { id: "most_used_platform", label: "your most used platform" },
+    { id: "purpose_of_use",     label: "your purpose of use" },
+  ];
+
+  function numericProblem(field, raw) {
+    const text = String(raw ?? "").trim();
+    if (text === "") return `Please enter ${field.label}.`;
+    const val = Number(text);
+    if (!Number.isFinite(val)) return "Please enter a valid number.";
+    if (field.integer && !Number.isInteger(val)) return "Please enter a whole number.";
+    if (val < field.min || val > field.max) {
+      return field.max === Infinity
+        ? `Please enter ${field.min} or more.`
+        : `Please enter a value between ${field.min} and ${field.max}.`;
+    }
+    return "";
+  }
+
+  function validateField(id) {
+    const input = $(id);
+    const numeric = NUMERIC_FIELDS.find((f) => f.id === id);
+    if (numeric) return numericProblem(numeric, input.value);
+    const choice = CHOICE_FIELDS.find((f) => f.id === id);
+    if (choice) {
+      if (String(input.value).trim() === "") {
+        return input.tagName === "SELECT" ? `Please choose ${choice.label}.` : `Please enter ${choice.label}.`;
+      }
+      return "";
+    }
+    if (id === "stress_level" && !stressInput.value) return "Please pick your stress level.";
+    return "";
+  }
+
+  function validateAll() {
+    const problems = [];
+    [...NUMERIC_FIELDS, ...CHOICE_FIELDS, { id: "stress_level" }].forEach(({ id }) => {
+      const message = validateField(id);
+      if (message) problems.push({ input: $(id), id, message });
+    });
+    return problems;
+  }
+
+  // Validate a field as soon as the user leaves it; clear the error while typing.
+  form.querySelectorAll("input:not([type=hidden]), select").forEach((el) => {
+    el.addEventListener("input", () => clearFieldError(el));
+    el.addEventListener("change", () => clearFieldError(el));
+    el.addEventListener("blur", () => {
+      if (String(el.value).trim() === "" && !el.dataset.touched) return; // don't nag on tab-through
+      el.dataset.touched = "1";
+      const message = validateField(el.id);
+      if (message) setFieldError(el, message);
+    });
+  });
+
+  /* -------------------------------------------------------
+     PAYLOAD (exact StudentData shape expected by FastAPI)
+     ------------------------------------------------------- */
+  function collectPayload() {
+    return {
+      age: parseInt(form.age.value, 10),
+      gender: form.gender.value,
+      country: form.country.value.trim(),
+      academic_level: form.academic_level.value,
+      most_used_platform: form.most_used_platform.value,
+      purpose_of_use: form.purpose_of_use.value,
+      avg_daily_usage_hours: parseFloat(form.avg_daily_usage_hours.value),
+      daily_unlocks: parseInt(form.daily_unlocks.value, 10),
+      study_hours: parseFloat(form.study_hours.value),
+      physical_activity_hours: parseFloat(form.physical_activity_hours.value),
+      sleep_hours_per_night: parseFloat(form.sleep_hours_per_night.value),
+      stress_level: stressInput.value,
+    };
+  }
+
+  /* -------------------------------------------------------
+     RESULT-CARD STATES
+     ------------------------------------------------------- */
+  function showState(name) {
+    Object.entries(states).forEach(([key, el]) => (el.hidden = key !== name));
+    resultCard.classList.toggle("is-loading", name === "loading");
+  }
+
+  function setSubmitting(on) {
+    submitBtn.disabled = on;
+    submitBtn.classList.toggle("loading", on);
+    submitBtn.querySelector(".btn-label").textContent = on ? "Analyzing…" : "Get my score";
+  }
+
+  const isStackedLayout = () => window.matchMedia("(max-width: 940px)").matches;
+
+  function scrollToResult() {
+    if (!isStackedLayout()) return;
+    resultCard.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  }
+
+  function scrollToForm() {
+    $("predict").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  }
+
+  /* -------------------------------------------------------
+     SCORE INTERPRETATION
+     (higher score = stronger well-being, 0–10 scale)
+     ------------------------------------------------------- */
+  function interpret(score) {
+    if (score < 5) {
+      return {
+        key: "low",
+        label: "Lower range",
+        text: "Your answers point to a period where your routine may be weighing on you. That is a signal to be gentle with yourself, not a verdict. Small, steady changes often make a real difference.",
+      };
+    }
+    if (score < 7) {
+      return {
+        key: "mid",
+        label: "Moderate range",
+        text: "Your routine looks fairly balanced, with some room to recover and recharge. A few small tweaks to rest, movement or screen time could help you feel even steadier.",
+      };
+    }
+    return {
+      key: "high",
+      label: "Higher range",
+      text: "Your habits point to a well-supported, resilient baseline. Keep nurturing the routines that are working for you, and check in with yourself regularly.",
+    };
+  }
+
+  // Gentle, non-clinical reflection prompts based on the user's own inputs.
+  function reflectionNotes(p) {
+    const notes = [];
+    if (p.sleep_hours_per_night < 7) notes.push("Sleep: you reported under 7 hours a night. A consistent bedtime can make days feel lighter.");
+    if (p.avg_daily_usage_hours >= 6) notes.push("Screen time: you spend a lot of the day on social media. Short breaks or phone-free windows might help.");
+    if (p.physical_activity_hours < 0.5) notes.push("Movement: even a short daily walk can lift mood and energy.");
+    if (p.stress_level === "High" || p.stress_level === "Very High") notes.push("Stress: you rated your stress as high. Talking to someone you trust can really help.");
+    return notes.slice(0, 3);
+  }
+
+  function renderResult(score, payload) {
+    const result = interpret(score);
+
+    scoreBand.textContent = result.label;
+    scoreBand.className = `band-pill band-${result.key}`;
+    scoreContext.textContent = result.text;
+    scaleSegs.forEach((seg) => seg.classList.toggle("on", seg.classList.contains(`seg-${result.key}`)));
+
+    const notes = reflectionNotes(payload);
+    scoreNotes.innerHTML = "";
+    notes.forEach((n) => {
+      const li = document.createElement("li");
+      li.textContent = n;
+      scoreNotes.appendChild(li);
+    });
+    scoreNotesWrap.hidden = notes.length === 0;
+
+    showState("result");
+    resetGauge();
+    animateGauge(score);
+    scrollToResult();
+  }
+
+  let retryMode = "submit"; // what the error-state button does
+
+  function renderError(label, copy, mode = "submit") {
+    errorLabel.textContent = label;
+    errorCopy.textContent = copy;
+    retryMode = mode;
+    errorRetryBtn.textContent = mode === "review" ? "Review my answers" : "Try again";
+    resetGauge();
+    showState("error");
+    scrollToResult();
+  }
+
+  /* -------------------------------------------------------
+     API CALL
+     ------------------------------------------------------- */
+  async function postPredict(base, payload, timeoutMs) {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(`${base}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
+  // Tries each backend in order; only falls through on network errors / timeouts.
+  async function requestPrediction(payload) {
+    let lastError = null;
+    for (const base of API_CANDIDATES) {
+      const isRemote = base === PROD_API;
+      try {
+        return await postPredict(base, payload, isRemote ? REMOTE_TIMEOUT_MS : LOCAL_TIMEOUT_MS);
+      } catch (err) {
+        lastError = err;
+      }
+    }
+    throw lastError || new Error("No backend reachable");
+  }
+
+  function applyServerValidationErrors(detail) {
+    if (!Array.isArray(detail)) return null;
+    let first = null;
+    detail.forEach((err) => {
+      const field = Array.isArray(err.loc) ? err.loc[err.loc.length - 1] : null;
+      const input = field ? $(field) : null;
+      if (input) {
+        setFieldError(input, "This value was not accepted. Please check it and try again.");
+        first = first || input;
+      }
+    });
+    return first;
+  }
+
+  /* -------------------------------------------------------
+     SUBMIT
+     ------------------------------------------------------- */
+  let submitting = false;
+
+  async function submitAssessment() {
+    if (submitting) return;
+    clearAllErrors();
+
+    const problems = validateAll();
+    if (problems.length) {
+      problems.forEach((p) => setFieldError(p.input, p.message));
+      showFormAlert(
+        problems.length === 1
+          ? "Almost there. Please fix the highlighted field."
+          : `Almost there. Please fix the ${problems.length} highlighted fields.`
+      );
+      const first = problems[0].input;
+      (first.type === "hidden" ? stressButtons[0] : first).focus();
+      return;
+    }
+
+    const payload = collectPayload();
+    submitting = true;
+    setSubmitting(true);
+    resetGauge();
+    showState("loading");
+    loadingCopy.textContent = "Running your answers through the model.";
+    const slowTimer = window.setTimeout(() => {
+      loadingCopy.textContent = "Still working. The server may be waking up, which can take up to a minute.";
+    }, SLOW_NOTICE_MS);
+    scrollToResult();
+
+    try {
+      const res = await requestPrediction(payload);
+
+      if (res.status === 422) {
+        const body = await res.json().catch(() => null);
+        const first = body ? applyServerValidationErrors(body.detail) : null;
+        showFormAlert("The server could not accept some of your answers. Please review the highlighted fields.");
+        renderError(
+          "Check your answers",
+          first
+            ? "A few answers were not accepted. They are highlighted in the form."
+            : "The server could not accept this submission. Please review your answers and try again.",
+          "review"
+        );
+        if (first) first.focus({ preventScroll: false });
+        return;
+      }
+
+      if (!res.ok) {
+        let message = `The server responded with status ${res.status}. Please try again in a moment.`;
+        const body = await res.json().catch(() => null);
+        if (body && typeof body.detail === "string") message = body.detail;
+        renderError("Prediction failed", message);
+        return;
+      }
+
+      const data = await res.json();
+      const score = data && data.predicted_mental_health_score;
+      if (typeof score !== "number" || !Number.isFinite(score)) {
+        renderError("Unexpected response", "The server replied, but the score was missing or in an unexpected format.");
+        return;
+      }
+
+      renderResult(score, payload);
+    } catch (err) {
+      const timedOut = err && err.name === "AbortError";
+      renderError(
+        timedOut ? "The server is taking too long" : "Can't reach the server",
+        timedOut
+          ? "The prediction server did not respond in time. It may be starting up, so please try again in a moment."
+          : "We couldn't connect to the prediction server. Please check your internet connection and try again."
+      );
+    } finally {
+      window.clearTimeout(slowTimer);
+      submitting = false;
+      setSubmitting(false);
+    }
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    submitAssessment();
+  });
+
+  /* -------------------------------------------------------
+     RESET / RETRY BUTTONS
+     ------------------------------------------------------- */
+  function resetAssessment() {
+    form.reset();
+    clearStress();
+    clearAllErrors();
+    form.querySelectorAll("[data-touched]").forEach((el) => delete el.dataset.touched);
+    resetGauge();
+    showState("idle");
+  }
+
+  // "Take the assessment again": clears everything and returns to the top of the form.
+  resetBtn.addEventListener("click", () => {
+    resetAssessment();
+    scrollToForm();
+    window.setTimeout(() => $("age").focus({ preventScroll: true }), prefersReducedMotion ? 50 : 600);
+  });
+
+  // "Clear form" in the form footer.
+  clearBtn.addEventListener("click", () => {
+    resetAssessment();
+    $("age").focus();
+  });
+
+  // "Edit my answers": keep the answers, go back to the form.
+  editBtn.addEventListener("click", () => {
+    scrollToForm();
+    window.setTimeout(() => $("age").focus({ preventScroll: true }), prefersReducedMotion ? 50 : 600);
+  });
+
+  errorRetryBtn.addEventListener("click", () => {
+    if (retryMode === "review") {
+      showState("idle");
+      scrollToForm();
+      const firstError = form.querySelector(".field-error input, .field-error select");
+      if (firstError) window.setTimeout(() => firstError.focus({ preventScroll: true }), 500);
+    } else {
+      submitAssessment();
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
